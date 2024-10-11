@@ -1,0 +1,22 @@
+---
+- hosts: backend
+  become: yes
+  tasks:
+    - name: Ensure Docker is installed
+      apt:
+        name: docker.io
+        state: present
+
+    - name: Ensure Docker Compose is installed
+      apt:
+        name: docker-compose
+        state: present
+
+    - name: Clone or update backend repository
+      git:
+        repo: "https://github.com/seu-usuario/seu-repositorio.git"
+        dest: /home/ubuntu/backend
+        update: yes
+
+    - name: Pull and start Docker containers for backend
+      command: docker-compose -f /home/ubuntu/backend/backend/docker-compose.yml up -d

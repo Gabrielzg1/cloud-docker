@@ -1,0 +1,28 @@
+---
+- hosts: frontend
+  become: yes
+  tasks:
+    - name: Ensure Docker is installed
+      apt:
+        name: docker.io
+        state: present
+
+    - name: Ensure Docker Compose is installed
+      apt:
+        name: docker-compose
+        state: present
+
+    - name: Clone or update frontend repository
+      git:
+        repo: "https://github.com/seu-usuario/seu-repositorio.git"
+        dest: /home/ubuntu/frontend
+        update: yes
+
+    - name: Build frontend application
+      command: |
+        cd /home/ubuntu/frontend/frontend
+        npm install
+        npm run build
+
+    - name: Pull and start Docker containers for frontend
+      command: docker-compose -f /home/ubuntu/frontend/frontend/docker-compose.yml up -d
