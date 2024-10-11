@@ -13,4 +13,4 @@ jobs:
         run: |
           curl -X POST http://SEU_SERVIDOR:5000/webhook \
           -H 'Content-Type: application/json' \
-          -d '{"repository": {"name": "seu-repositorio"}}'
+          -d '{"repository": {"name": "cloud-docker"}}'

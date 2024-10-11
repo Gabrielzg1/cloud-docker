@@ -2,11 +2,11 @@
   tasks:
     - name: Clonar ou atualizar o repositório do backend
       git:
-        repo: "https://github.com/SEU_REPO_BACKEND.git"
-        dest: /caminho/backend
+        repo: "https://github.com/Gabrielzg1/cloud-docker.git"
+        dest: /backend
         version: main
 
     - name: Subir containers com Docker Compose (Node.js + PostgreSQL)
       shell: docker-compose up -d
       args:
-        chdir: /caminho/backend
+        chdir: /home/gabriel/cloud-docker/backend

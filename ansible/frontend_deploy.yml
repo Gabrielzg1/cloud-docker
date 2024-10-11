@@ -2,11 +2,11 @@
   tasks:
     - name: Clonar ou atualizar o repositório do frontend
       git:
-        repo: "https://github.com/SEU_REPO_FRONTEND.git"
-        dest: /caminho/frontend
+        repo: "https://github.com/Gabrielzg1/cloud-docker.git"
+        dest: /frontend
         version: main
 
     - name: Subir o container do frontend com Docker Compose
       shell: docker-compose up -d
       args:
-        chdir: /caminho/frontend
+        chdir: /home/gabriel/cloud-docker/frontend
