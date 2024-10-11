@@ -3,10 +3,10 @@ all:
     frontend:
       hosts:
         frontend-vm:
-          ansible_host: IP_DA_VM_FRONTEND
-          ansible_user: seu_usuario
+          ansible_host: 192.168.15.74
+          ansible_user: gabriel
     backend:
       hosts:
         backend-vm:
-          ansible_host: IP_DA_VM_BACKEND
-          ansible_user: seu_usuario
+          ansible_host: 192.168.15.100
+          ansible_user: gabriel
