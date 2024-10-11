@@ -1,0 +1,12 @@
+- hosts: backend
+  tasks:
+    - name: Clonar ou atualizar o repositório do backend
+      git:
+        repo: "https://github.com/SEU_REPO_BACKEND.git"
+        dest: /caminho/backend
+        version: main
+
+    - name: Subir containers com Docker Compose (Node.js + PostgreSQL)
+      shell: docker-compose up -d
+      args:
+        chdir: /caminho/backend

@@ -1,10 +1,29 @@
 version: "3"
 services:
-  app:
-    image: your_image_name
-    ports:
-      - 8080:8080
+  db:
+    image: postgres:13
     environment:
-      - ENV_VARIABLE=value
+      POSTGRES_USER: usuario
+      POSTGRES_PASSWORD: senha
+      POSTGRES_DB: meu_banco
     volumes:
-      - ./app:/app
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - backend-network
+
+  backend:
+    build: .
+    depends_on:
+      - db
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: postgres://usuario:senha@db:5432/meu_banco
+    networks:
+      - backend-network
+
+networks:
+  backend-network:
+
+volumes:
+  db_data:

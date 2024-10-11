@@ -1,46 +1,16 @@
-name: Deploy Application
+name: Deploy Projeto
 
 on:
   push:
     branches:
-      - main # Dispara o workflow ao fazer push na branch main
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
-      # 1. Checkout do código fonte do repositório
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      # 2. Configurar o Python e o Ansible no runner
-      - name: Set up Python for Ansible
-        uses: actions/setup-python@v2
-        with:
-          python-version: "3.x"
-
-      - name: Install Ansible
+      - name: Enviar webhook para deploy
         run: |
-          python3 -m pip install --upgrade pip
-          pip install ansible
-
-      # 3. Conectar na VM do Frontend e executar o playbook do Frontend
-      - name: Add SSH key for frontend VM
-        uses: webfactory/ssh-agent@v0.5.3
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY_FRONTEND }}
-
-      - name: Run Ansible playbook for Frontend
-        run: |
-          ansible-playbook -i ansible/inventory.yml ansible/frontend-playbook.yml
-
-      # 4. Conectar na VM do Backend e executar o playbook do Backend
-      - name: Add SSH key for backend VM
-        uses: webfactory/ssh-agent@v0.5.3
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY_BACKEND }}
-
-      - name: Run Ansible playbook for Backend
-        run: |
-          ansible-playbook -i ansible/inventory.yml ansible/backend-playbook.yml
+          curl -X POST http://SEU_SERVIDOR:5000/webhook \
+          -H 'Content-Type: application/json' \
+          -d '{"repository": {"name": "seu-repositorio"}}'
