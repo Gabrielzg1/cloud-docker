@@ -1,11 +1,10 @@
-version: "3"
 services:
   db:
     image: postgres:13
     environment:
-      POSTGRES_USER: usuario
-      POSTGRES_PASSWORD: senha
-      POSTGRES_DB: meu_banco
+      POSTGRES_USER: username
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: main # Alterado de 'db' para 'main'
     volumes:
       - db_data:/var/lib/postgresql/data
     networks:
@@ -17,8 +16,6 @@ services:
       - db
     ports:
       - "3000:3000"
-    environment:
-      DATABASE_URL: postgres://usuario:senha@db:5432/meu_banco
     networks:
       - backend-network
 
