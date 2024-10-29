@@ -1,0 +1,23 @@
+# Ignorar arquivos e pastas gerados pelo Node.js
+node_modules/
+
+# Ignorar arquivos e pastas gerados pelo Vue.js
+dist/
+
+# Ignorar arquivos de log
+*.log
+
+# Ignorar arquivos de configuração de ambiente
+.env
+
+# Ignorar arquivos de dependências do Docker
+.docker/
+
+# Ignorar arquivos de cache do Docker
+.dockerignore
+
+# Ignorar arquivos de build do Vue.js
+build/
+
+# Ignorar arquivos de dependências do Vue.js
+package-lock.json
