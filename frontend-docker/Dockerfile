@@ -1,20 +1,14 @@
-# Use uma imagem base oficial do Node.js
-FROM node:14
+# Usa uma imagem base Node.js
+FROM node:18
 
-# Defina o diretório de trabalho no contêiner
+# Define o diretório de trabalho
 WORKDIR /app
 
-# Copie o package.json e o package-lock.json para o diretório de trabalho
-COPY package*.json ./
-
-# Instale as dependências do projeto
-RUN npm install
-
-# Copie o restante do código-fonte para o diretório de trabalho
+# Copia o código da aplicação para o contêiner
 COPY . .
 
-# Exponha a porta que a aplicação irá rodar
+# Expõe a porta usada pelo servidor
 EXPOSE 8080
 
-# Defina o comando de inicialização
-CMD ["npm", "serve"]
+# Comando para iniciar o servidor Node.js
+CMD ["node", "server.js"]
