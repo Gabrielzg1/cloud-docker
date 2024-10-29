@@ -11,4 +11,4 @@ COPY . .
 EXPOSE 8080
 
 # Comando para iniciar o servidor Node.js
-CMD ["node", "server.js"]
+CMD ["node", "main.js"]
