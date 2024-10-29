@@ -61,5 +61,5 @@ app.post("/piada", async (req, res) => {
 });
 
 app.listen(port, "0.0.0.0", () => {
-	console.log(`Servidor rodando em http://localhost:${port}`);
+	console.log(`Servidor rodando em http://192.168.2.20:${port}`);
 });
