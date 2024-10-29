@@ -21,7 +21,7 @@ app.get("/piada", async (req, res) => {
 		const query =
 			"SELECT setup, punchline FROM piadas ORDER BY RANDOM() LIMIT 1";
 		const result = await pool.query(query);
-
+		console.log("teste");
 		if (result.rows.length > 0) {
 			const piada = result.rows[0];
 			return res.json({ setup: piada.setup, punchline: piada.punchline });
