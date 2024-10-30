@@ -60,6 +60,7 @@
 				jokeButton.disabled = true;
 				jokeButton.innerText = "Carregando...";
 				try {
+					console.log("teste");
 					const response = await fetch("http://192.168.2.20:3000/piada");
 					if (!response.ok) {
 						throw new Error("Failed to fetch joke");
