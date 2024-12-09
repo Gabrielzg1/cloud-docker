@@ -16,12 +16,9 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v3
 
-      # Configura o Docker Compose usando a ação oficial
-      - name: Set up Docker Compose
-        uses: docker/setup-buildx-action@v2
-
+      # Configurar Docker Compose usando a ação oficial
       - name: Run Docker Compose Up
-        uses: peter-evans/docker-compose-actions-workflow@v2
+        uses: peter-evans/docker-compose-actions-workflow@v1
         with:
           up: docker-compose.yml
           run-wait: |
@@ -44,8 +41,8 @@ jobs:
       - name: Run Playwright Tests
         run: npx playwright test
 
-      # Derruba os serviços ao final
+      # Derrubar os serviços ao final
       - name: Run Docker Compose Down
-        uses: peter-evans/docker-compose-actions-workflow@v2
+        uses: peter-evans/docker-compose-actions-workflow@v1
         with:
           down: true
