@@ -9,31 +9,37 @@ on:
       - main
 
 jobs:
-  test:
+  docker-compose:
     runs-on: ubuntu-latest
 
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
 
-      # Configurar Docker Compose usando a ação oficial
-      - name: Run Docker Compose Up
-        uses: peter-evans/docker-compose-actions-workflow@v1
-        with:
-          up: docker-compose.yml
-          run-wait: |
-            echo "Waiting for Backend to start..."
-            until curl -s http://localhost:3000/piada; do
-              echo "Waiting for Backend..."
-              sleep 5
-            done
-            echo "Backend is ready!"
-            echo "Waiting for Frontend to start..."
-            until curl -s http://localhost:8080; do
-              echo "Waiting for Frontend..."
-              sleep 5
-            done
-            echo "Frontend is ready!"
+      # Configurar Docker Compose usando a ação do Medium
+      - name: Set up Docker Compose
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker-compose
+
+      - name: Start Docker Compose
+        run: docker-compose up -d
+
+      # Aguardar serviços ficarem prontos
+      - name: Wait for Backend and Frontend
+        run: |
+          echo "Waiting for Backend to start..."
+          until curl -s http://localhost:3000/piada; do
+            echo "Waiting for Backend..."
+            sleep 5
+          done
+          echo "Backend is ready!"
+          echo "Waiting for Frontend to start..."
+          until curl -s http://localhost:8080; do
+            echo "Waiting for Frontend..."
+            sleep 5
+          done
+          echo "Frontend is ready!"
 
       - name: Install Playwright Browsers
         run: npx playwright install
@@ -42,7 +48,5 @@ jobs:
         run: npx playwright test
 
       # Derrubar os serviços ao final
-      - name: Run Docker Compose Down
-        uses: peter-evans/docker-compose-actions-workflow@v1
-        with:
-          down: true
+      - name: Shut Down Docker Compose
+        run: docker-compose down
