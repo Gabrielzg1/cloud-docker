@@ -16,13 +16,11 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: "18"
+      - name: Set up Docker Compose (CLI-based)
+        run: sudo apt-get update && sudo apt-get install -y docker-compose-plugin
 
       - name: Start Docker Compose
-        run: docker-compose up -d
+        run: docker compose up -d
 
       - name: Wait for Backend and Frontend
         run: |
@@ -45,4 +43,4 @@ jobs:
 
       - name: Shut Down Docker Compose
         if: always()
-        run: docker-compose down
+        run: docker compose down
