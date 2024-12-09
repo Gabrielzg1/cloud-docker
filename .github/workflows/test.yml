@@ -16,16 +16,26 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v3
 
-      # Configurar Docker Compose usando a ação do Medium
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      # Instalar dependências do projeto
+      - name: Install Dependencies
+        run: npm install
+
+      # Configurar Docker Compose
       - name: Set up Docker Compose
         run: |
           sudo apt-get update
           sudo apt-get install -y docker-compose
 
+      # Subir serviços com Docker Compose
       - name: Start Docker Compose
         run: docker-compose up -d
 
-      # Aguardar serviços ficarem prontos
+      # Esperar os serviços ficarem prontos
       - name: Wait for Backend and Frontend
         run: |
           echo "Waiting for Backend to start..."
@@ -41,9 +51,11 @@ jobs:
           done
           echo "Frontend is ready!"
 
+      # Instalar navegadores do Playwright
       - name: Install Playwright Browsers
         run: npx playwright install
 
+      # Executar os testes
       - name: Run Playwright Tests
         run: npx playwright test
 
