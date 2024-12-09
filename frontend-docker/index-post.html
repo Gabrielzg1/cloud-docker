@@ -1,145 +1,148 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Adicionar Piada</title>
-		<style>
-			.container {
-				padding: 0;
-				margin: 0;
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-				justify-content: center;
-				height: 100vh;
-				background-color: #f0f0f0;
-				padding: 20px;
-			}
 
-			form {
-				display: flex;
-				flex-direction: column;
-				width: 300px;
-			}
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Adicionar Piada</title>
+	<style>
+		.container {
+			padding: 0;
+			margin: 0;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			height: 100vh;
+			background-color: #f0f0f0;
+			padding: 20px;
+		}
 
-			label {
-				margin-top: 10px;
-				font-size: 1.2em;
-				color: #333;
-			}
+		form {
+			display: flex;
+			flex-direction: column;
+			width: 300px;
+		}
 
-			input,
-			textarea {
-				padding: 10px;
-				margin-top: 5px;
-				font-size: 1em;
-				border: 1px solid #ccc;
-				border-radius: 5px;
-			}
+		label {
+			margin-top: 10px;
+			font-size: 1.2em;
+			color: #333;
+		}
 
-			button {
-				margin-top: 20px;
-				padding: 10px 20px;
-				font-size: 1em;
-				color: #fff;
-				background-color: #007bff;
-				border: none;
-				border-radius: 5px;
-				cursor: pointer;
-				transition: background-color 0.3s ease;
-			}
+		input,
+		textarea {
+			padding: 10px;
+			margin-top: 5px;
+			font-size: 1em;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+		}
 
-			button:disabled {
-				background-color: #6c757d;
-				cursor: not-allowed;
-			}
+		button {
+			margin-top: 20px;
+			padding: 10px 20px;
+			font-size: 1em;
+			color: #fff;
+			background-color: #007bff;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			transition: background-color 0.3s ease;
+		}
 
-			button:hover:not(:disabled) {
-				background-color: #0056b3;
-			}
+		button:disabled {
+			background-color: #6c757d;
+			cursor: not-allowed;
+		}
 
-			.message {
-				font-size: 1.2em;
-				color: #666;
-				margin-top: 20px;
-				text-align: center;
-			}
+		button:hover:not(:disabled) {
+			background-color: #0056b3;
+		}
 
-			.back-button {
-				margin-top: 20px;
-				font-size: 1em;
-				color: #007bff;
-				background: none;
-				border: none;
-				cursor: pointer;
-				text-decoration: underline;
-				padding: 0;
-			}
+		.message {
+			font-size: 1.2em;
+			color: #666;
+			margin-top: 20px;
+			text-align: center;
+		}
 
-			.back-button:hover {
-				color: #0056b3;
-			}
-		</style>
-	</head>
-	<body>
-		<div class="container">
-			<h1>Adicionar Nova Piada</h1>
-			<form id="jokeForm">
-				<label for="setup">Setup:</label>
-				<textarea id="setup" name="setup" rows="3" required></textarea>
+		.back-button {
+			margin-top: 20px;
+			font-size: 1em;
+			color: #007bff;
+			background: none;
+			border: none;
+			cursor: pointer;
+			text-decoration: underline;
+			padding: 0;
+		}
 
-				<label for="punchline">Punchline:</label>
-				<textarea id="punchline" name="punchline" rows="3" required></textarea>
+		.back-button:hover {
+			color: #0056b3;
+		}
+	</style>
+</head>
 
-				<button type="submit">Adicionar Piada</button>
-			</form>
-			<p class="message" id="responseMessage"></p>
+<body>
+	<div class="container">
+		<h1>Adicionar Nova Piada</h1>
+		<form id="jokeForm">
+			<label for="setup">Setup:</label>
+			<textarea id="setup" name="setup" rows="3" required></textarea>
 
-			<!-- Botão para redirecionar para a página inicial -->
-			<button class="back-button" onclick="goBack()">
-				Voltar para a página inicial
-			</button>
-		</div>
+			<label for="punchline">Punchline:</label>
+			<textarea id="punchline" name="punchline" rows="3" required></textarea>
 
-		<script>
-			const jokeForm = document.getElementById("jokeForm");
-			const responseMessage = document.getElementById("responseMessage");
+			<button type="submit">Adicionar Piada</button>
+		</form>
+		<p class="message" id="responseMessage"></p>
 
-			jokeForm.addEventListener("submit", async (event) => {
-				event.preventDefault();
+		<!-- Botão para redirecionar para a página inicial -->
+		<button class="back-button" onclick="goBack()">
+			Voltar para a página inicial
+		</button>
+	</div>
 
-				const setup = document.getElementById("setup").value;
-				const punchline = document.getElementById("punchline").value;
+	<script>
+		const jokeForm = document.getElementById("jokeForm");
+		const responseMessage = document.getElementById("responseMessage");
 
-				try {
-					const response = await fetch("http://192.168.2.20:3000/piada", {
-						method: "POST",
-						headers: {
-							"Content-Type": "application/json",
-						},
-						body: JSON.stringify({ setup, punchline }),
-					});
+		jokeForm.addEventListener("submit", async (event) => {
+			event.preventDefault();
 
-					const result = await response.json();
-					if (response.ok) {
-						responseMessage.innerText = "Piada adicionada com sucesso!";
-						responseMessage.style.color = "green";
-						jokeForm.reset();
-					} else {
-						responseMessage.innerText = `Erro: ${result.error}`;
-						responseMessage.style.color = "red";
-					}
-				} catch (error) {
-					console.error("Erro ao adicionar piada:", error);
-					responseMessage.innerText = "Erro ao adicionar piada";
+			const setup = document.getElementById("setup").value;
+			const punchline = document.getElementById("punchline").value;
+
+			try {
+				const response = await fetch("http://localhost:3000/piada", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({ setup, punchline }),
+				});
+
+				const result = await response.json();
+				if (response.ok) {
+					responseMessage.innerText = "Piada adicionada com sucesso!";
+					responseMessage.style.color = "green";
+					jokeForm.reset();
+				} else {
+					responseMessage.innerText = `Erro: ${result.error}`;
 					responseMessage.style.color = "red";
 				}
-			});
-
-			function goBack() {
-				window.location.href = "/";
+			} catch (error) {
+				console.error("Erro ao adicionar piada:", error);
+				responseMessage.innerText = "Erro ao adicionar piada";
+				responseMessage.style.color = "red";
 			}
-		</script>
-	</body>
+		});
+
+		function goBack() {
+			window.location.href = "/";
+		}
+	</script>
+</body>
+
 </html>

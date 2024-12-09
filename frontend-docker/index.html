@@ -1,91 +1,96 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<style>
-			.container {
-				padding: 0;
-				margin: 0;
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-				justify-content: center;
-				height: 100vh;
-				background-color: #f0f0f0;
-				padding: 20px;
-			}
 
-			button {
-				padding: 10px 20px;
-				font-size: 1em;
-				color: #fff;
-				background-color: #007bff;
-				border: none;
-				border-radius: 5px;
-				cursor: pointer;
-				transition: background-color 0.3s ease;
-			}
+<head>
+	<style>
+		.container {
+			padding: 0;
+			margin: 0;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			height: 100vh;
+			background-color: #f0f0f0;
+			padding: 20px;
+		}
 
-			button:disabled {
-				background-color: #6c757d;
-				cursor: not-allowed;
-			}
+		button {
+			padding: 10px 20px;
+			font-size: 1em;
+			color: #fff;
+			background-color: #007bff;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			transition: background-color 0.3s ease;
+		}
 
-			button:hover:not(:disabled) {
-				background-color: #0056b3;
-			}
+		button:disabled {
+			background-color: #6c757d;
+			cursor: not-allowed;
+		}
 
-			p {
-				font-size: 1.2em;
-				color: #666;
-				margin-top: 20px;
-			}
-		</style>
-	</head>
-	<body>
-		<div class="container">
-			<button id="jokeButton">Pegar Piada</button>
-			<div id="jokeContainer">
-				<b><p id="setup"></p></b>
-				<p id="punchline"></p>
-			</div>
-			<a class="back-button" href="/form"> Adicionar piada </a>
+		button:hover:not(:disabled) {
+			background-color: #0056b3;
+		}
+
+		p {
+			font-size: 1.2em;
+			color: #666;
+			margin-top: 20px;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container">
+		<button id="jokeButton">Pegar Piada</button>
+		<div id="jokeContainer">
+			<b>
+				<p id="setup"></p>
+			</b>
+			<p id="punchline"></p>
 		</div>
+		<a class="back-button" href="/form"> Adicionar piada </a>
+	</div>
 
-		<script>
-			const jokeButton = document.getElementById("jokeButton");
-			const setupElement = document.getElementById("setup");
-			const punchlineElement = document.getElementById("punchline");
+	<script>
+		const jokeButton = document.getElementById("jokeButton");
+		const setupElement = document.getElementById("setup");
+		const punchlineElement = document.getElementById("punchline");
 
-			const fetchJokeHandler = async () => {
-				jokeButton.disabled = true;
-				jokeButton.innerText = "Carregando...";
-				try {
-					console.log("teste");
-					const response = await fetch("http://192.168.2.20:3000/piada");
-					if (!response.ok) {
-						throw new Error("Failed to fetch joke");
-					}
-					const joke = await response.json();
-					setupElement.innerText = joke.setup;
-					punchlineElement.innerText = joke.punchline;
-				} catch (error) {
-					console.error("Failed to fetch joke:", error);
-					setupElement.innerText = "Error";
-					punchlineElement.innerText = "Não foi possível buscar a piada";
-				} finally {
-					jokeButton.disabled = false;
-					jokeButton.innerText = "Pegar Piada";
+		const fetchJokeHandler = async () => {
+			jokeButton.disabled = true;
+			jokeButton.innerText = "Carregando...";
+			try {
+				console.log("teste");
+				const response = await fetch("http://localhost:3000/piada");
+				if (!response.ok) {
+					throw new Error("Failed to fetch joke");
 				}
-			};
-
-			jokeButton.addEventListener("click", fetchJokeHandler);
-
-			// Fetch a joke on page load
-			fetchJokeHandler();
-
-			function goBack() {
-				window.location.href = "/form";
+				const joke = await response.json();
+				setupElement.innerText = joke.setup;
+				punchlineElement.innerText = joke.punchline;
+			} catch (error) {
+				console.error("Failed to fetch joke:", error);
+				setupElement.innerText = "Error";
+				punchlineElement.innerText = "Nao foi possivel buscar a piada";
+			} finally {
+				jokeButton.disabled = false;
+				jokeButton.innerText = "Pegar Piada";
 			}
-		</script>
-	</body>
+		};
+
+		jokeButton.addEventListener("click", fetchJokeHandler);
+
+		// Fetch a joke on page load
+		fetchJokeHandler();
+
+		function goBack() {
+			window.location.href = "/form";
+		}
+	</script>
+</body>
+
 </html>

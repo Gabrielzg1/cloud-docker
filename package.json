@@ -1,0 +1,17 @@
+{
+  "name": "cloud-docker",
+  "version": "1.0.0",
+  "main": "add-joke.test.js",
+  "scripts": {
+    "test": "playwright test tests/"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "playwright": "^1.49.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.0"
+  }
+}

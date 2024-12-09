@@ -1,0 +1,40 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: username
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: main
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./backend/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - app-network
+
+  backend:
+    build:
+      context: ./backend
+    depends_on:
+      - db
+    ports:
+      - "3000:3000"
+    networks:
+      - app-network
+
+  frontend:
+    build:
+      context: ./frontend-docker
+    depends_on:
+      - backend
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+
+volumes:
+  db_data:
